@@ -4,6 +4,7 @@ project(lab05)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error=maybe-uninitialized")
 
 add_subdirectory(formatter_lib)
 add_subdirectory(formatter_ex_lib)
