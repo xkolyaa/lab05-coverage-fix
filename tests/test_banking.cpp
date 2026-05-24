@@ -1,11 +1,13 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+
 #include "Account.h"
 #include "Transaction.h"
 
 class MockAccount : public Account {
 public:
-    MockAccount(int id, int balance) : Account(id, balance) {}
+    MockAccount(int id, int balance)
+        : Account(id, balance) {}
 
     MOCK_CONST_METHOD0(GetBalance, int());
     MOCK_METHOD0(Lock, void());
@@ -18,9 +20,14 @@ TEST(Account, Methods) {
     EXPECT_EQ(acc.GetBalance(), 1000);
 
     acc.Lock();
-    EXPECT_THROW(acc.ChangeBalance(100), std::runtime_error);
+
+    EXPECT_THROW(
+        acc.ChangeBalance(100),
+        std::runtime_error
+    );
 
     acc.Unlock();
+
     acc.ChangeBalance(100);
 
     EXPECT_EQ(acc.GetBalance(), 1100);
@@ -103,6 +110,18 @@ TEST(Transaction, BoundarySum100) {
 
     EXPECT_EQ(a1.GetBalance(), 900);
     EXPECT_EQ(a2.GetBalance(), 1100);
+}
+
+TEST(Account, DestructorCoverage) {
+    Account* acc = new Account(1, 1000);
+
+    delete acc;
+}
+
+TEST(Transaction, DestructorCoverage) {
+    Transaction* tr = new Transaction();
+
+    delete tr;
 }
 
 TEST(Account, Mock) {
