@@ -32,20 +32,19 @@ jobs:
 
     - name: Generate Coverage
       run: |
-        lcov --rc lcov_branch_coverage=1 \
+        lcov --ignore-errors mismatch \
              --capture \
              --directory . \
              --output-file coverage.info
 
-        lcov --rc lcov_branch_coverage=1 \
+        lcov --ignore-errors mismatch \
              --remove coverage.info \
              '/usr/*' \
              '*/third-party/*' \
              '*/tests/*' \
              --output-file coverage.info
 
-        lcov --rc lcov_branch_coverage=1 \
-             --list coverage.info
+        lcov --list coverage.info
 
     - name: Coveralls Report
       uses: coverallsapp/github-action@master
